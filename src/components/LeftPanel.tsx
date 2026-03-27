@@ -6,12 +6,14 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { NavLink } from "./NavLink";
+import { ThemeToggle } from "./ThemeToggle";
 import { useTypewriter } from "../hooks/useTypewriter";
 import type {
   NavItem,
   SectionId,
   TimelineMeta,
   PortfolioProfile,
+  Theme,
 } from "../types";
 
 const navItems: NavItem[] = [
@@ -33,12 +35,16 @@ interface LeftPanelProps {
   activeSection: SectionId;
   meta?: TimelineMeta;
   portfolioProfile?: PortfolioProfile | null;
+  theme: Theme;
+  onToggleTheme: () => void;
 }
 
 export function LeftPanel({
   activeSection,
   meta,
   portfolioProfile,
+  theme,
+  onToggleTheme,
 }: LeftPanelProps) {
   const name     = portfolioProfile?.name     ?? "Vigneshwar Pasupathi";
   const initials = portfolioProfile?.initials ?? "VP";
@@ -50,7 +56,16 @@ export function LeftPanel({
   const resumeUrl = portfolioProfile?.contact.resumeUrl ?? "";
   const timeline = portfolioProfile?.contact.timeline ?? "";
 
+  const [imgSrc, setImgSrc] = useState(photoUrl || '/vignesh_sketch.png');
   const [imgError, setImgError] = useState(false);
+
+  const handleImgError = () => {
+    if (imgSrc !== 'vignesh_sketch.png') {
+      setImgSrc('vignesh_sketch.png');
+    } else {
+      setImgError(true);
+    }
+  };
   const role = useTypewriter(roles);
 
   const currentYear = new Date().getFullYear();
@@ -60,16 +75,59 @@ export function LeftPanel({
     : null;
 
   return (
-    <aside className="flex flex-col justify-between h-full py-16 px-10 lg:px-14">
+    <div className="h-full">
+      {/* ── Mobile header (sticky top bar on small screens) ── */}
+      <div
+        className="lg:hidden sticky top-0 z-40 flex items-center justify-between px-3 py-3"
+        style={{ background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}
+      >
+        <div className="flex items-center gap-3 min-w-0">
+          {!imgError ? (
+            <img
+              src={imgSrc}
+              alt={name}
+              onError={handleImgError}
+              className="w-9 h-9 rounded-lg object-cover object-top shrink-0"
+              style={{ border: '1px solid var(--border)' }}
+            />
+          ) : (
+            <div
+              className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold shrink-0"
+              style={{ background: 'var(--accent-glow)', color: 'var(--accent)', border: '1px solid var(--border)' }}
+            >
+              {initials}
+            </div>
+          )}
+          <div className="min-w-0">
+            <div
+              className="text-sm font-bold leading-tight truncate"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {name}
+            </div>
+            <div
+              className="text-xs font-medium h-4 flex items-center"
+              style={{ color: 'var(--accent)' }}
+            >
+              {role}<span className="cursor" />
+            </div>
+          </div>
+        </div>
+
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+      </div>
+
+      {/* ── Desktop sidebar (lg+) ── */}
+      <aside className="hidden lg:flex flex-col justify-between h-full py-16 px-14">
       {/* Top — identity */}
       <div>
         <div className="mb-10">
           <div className="flex items-center gap-4 mb-4">
-            {photoUrl && !imgError ? (
+            {!imgError ? (
               <img
-                src={photoUrl}
-                alt={name}
-                onError={() => setImgError(true)}
+                src={imgSrc}
+                alt={initials}
+                onError={handleImgError}
                 className="w-14 h-14 rounded-xl object-cover object-top shrink-0"
                 style={{ border: '2px solid var(--border)' }}
               />
@@ -237,6 +295,7 @@ export function LeftPanel({
           </p>
         )}
       </div>
-    </aside>
+      </aside>
+    </div>
   );
 }

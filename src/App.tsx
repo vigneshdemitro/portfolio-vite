@@ -7,6 +7,8 @@ import { Skills } from './components/sections/Skills';
 import { Experience } from './components/sections/Experience';
 import { Contact } from './components/sections/Contact';
 import { BackToTop } from './components/ui/BackToTop';
+import { MobileNav } from './components/MobileNav';
+import { MobileSocials } from './components/MobileSocials';
 import { useTheme } from './hooks/useTheme';
 import { useActiveSection } from './hooks/useActiveSection';
 import { getTimelineData, getPortfolioData } from './lib/api';
@@ -51,8 +53,8 @@ export default function App() {
       {/* Aurora blobs (dark only) */}
       <div className="aurora" />
 
-      {/* Theme toggle — fixed top right */}
-      <div className="fixed top-4 right-5 z-50">
+      {/* Theme toggle — fixed top right (desktop only) */}
+      <div className="hidden lg:block fixed top-4 right-5 z-50">
         <ThemeToggle theme={theme} onToggle={toggle} />
       </div>
 
@@ -65,11 +67,13 @@ export default function App() {
             activeSection={activeSection}
             meta={timelineData?.meta}
             portfolioProfile={portfolioData?.profile ?? null}
+            theme={theme}
+            onToggleTheme={toggle}
           />
         </div>
 
         {/* ── RIGHT PANEL — scrollable content ──────── */}
-        <main className="lg:w-[58%] px-8 lg:px-14 py-16 lg:py-24">
+        <main className="lg:w-[58%] px-8 lg:px-14 py-16 lg:py-24 pb-24 lg:pb-24">
           <About paragraphs={portfolioData?.about.paragraphs} />
           <Skills skills={portfolioData?.skills} />
           <Experience experiences={experiences} timelineUrl={portfolioData?.profile.contact.timeline} />
@@ -77,6 +81,12 @@ export default function App() {
 
         </main>
       </div>
+
+      {/* Mobile social strip — fixed right */}
+      <MobileSocials contact={portfolioData?.profile.contact} />
+
+      {/* Mobile bottom nav */}
+      <MobileNav activeSection={activeSection} />
 
       {/* Scroll to top — fixed bottom right */}
       <BackToTop />
