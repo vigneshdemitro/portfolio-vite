@@ -42,7 +42,7 @@ export default function App() {
           endDate: p.endDate,
           description: p.description,
         })),
-        skills: [],
+        skills: e.skills ?? [],
       }));
   }, [timelineData]);
 

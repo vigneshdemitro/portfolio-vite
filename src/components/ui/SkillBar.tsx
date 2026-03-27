@@ -31,15 +31,16 @@ const iconColors: Record<string, string> = {
 };
 
 const iconLabels: Record<string, string> = {
-  ts:    'TS',
-  node:  'JS',
-  py:    'PY',
-  react: 'RE',
-  ng:    'NG',
-  nest:  'NE',
-  pg:    'PG',
-  aws:   'AW',
-  ci:    'CI',
+  ts:    'ts',
+  js:    'js',
+  node:  'node',
+  py:    'py',
+  react: 'react',
+  ng:    'ng',
+  nest:  'nest',
+  pg:    'pg',
+  aws:   'aws',
+  ci:    'ci',
 };
 
 export function SkillBar({ skill, delay = 0 }: SkillBarProps) {

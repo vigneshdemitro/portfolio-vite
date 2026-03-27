@@ -65,39 +65,42 @@ export function LeftPanel({
       {/* Top — identity */}
       <div>
         <div className="mb-10">
-          {photoUrl && !imgError ? (
-            <img
-              src={photoUrl}
-              alt={name}
-              onError={() => setImgError(true)}
-              className="w-14 h-14 rounded-xl object-cover mb-6"
-              style={{ border: '2px solid var(--border)' }}
-            />
-          ) : (
-            <div
-              className="inline-flex items-center justify-center w-14 h-14 rounded-xl text-lg font-bold mb-6"
-              style={{
-                background: "var(--accent-glow)",
-                color: "var(--accent)",
-                border: "1px solid var(--border)",
-              }}
-            >
-              {initials}
+          <div className="flex items-center gap-4 mb-4">
+            {photoUrl && !imgError ? (
+              <img
+                src={photoUrl}
+                alt={name}
+                onError={() => setImgError(true)}
+                className="w-14 h-14 rounded-xl object-cover object-top shrink-0"
+                style={{ border: '2px solid var(--border)' }}
+              />
+            ) : (
+              <div
+                className="inline-flex items-center justify-center w-14 h-14 rounded-xl text-lg font-bold shrink-0"
+                style={{
+                  background: "var(--accent-glow)",
+                  color: "var(--accent)",
+                  border: "1px solid var(--border)",
+                }}
+              >
+                {initials}
+              </div>
+            )}
+            <div className="min-w-0">
+              <h1
+                className="text-2xl font-bold tracking-tight mb-0.5"
+                style={{ color: "var(--text-primary)" }}
+              >
+                {name}
+              </h1>
+              <p
+                className="text-sm font-medium h-5"
+                style={{ color: "var(--accent)" }}
+              >
+                {role}<span className="cursor" />
+              </p>
             </div>
-          )}
-          <h1
-            className="text-3xl font-bold tracking-tight mb-1"
-            style={{ color: "var(--text-primary)" }}
-          >
-            {name}
-          </h1>
-          <p
-            className="text-sm font-medium mb-4 h-5"
-            style={{ color: "var(--accent)" }}
-          >
-            {role}
-            <span className="cursor" />
-          </p>
+          </div>
           <p
             className="text-sm leading-relaxed max-w-xs"
             style={{ color: "var(--text-secondary)" }}
@@ -105,6 +108,34 @@ export function LeftPanel({
             {tagline}
           </p>
         </div>
+
+        {/* Resume */}
+        {resumeUrl && (
+          <a
+            href={resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5 mb-6"
+            style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.borderColor = 'var(--accent)';
+              el.style.color = 'var(--accent)';
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.borderColor = 'var(--border)';
+              el.style.color = 'var(--text-secondary)';
+            }}
+          >
+            <FileDown size={12} className="shrink-0 transition-transform duration-200 group-hover:translate-y-0.5" />
+            <div className="text-left">
+              <div>Resume</div>
+              <div className="font-normal opacity-60 text-[10px] leading-tight">View / Download</div>
+            </div>
+            <ArrowUpRight size={11} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        )}
 
         {/* Nav */}
         <nav aria-label="Sections">
@@ -168,34 +199,8 @@ export function LeftPanel({
         )}
       </div>
 
-      {/* Bottom — socials + resume */}
+      {/* Bottom — socials */}
       <div className="space-y-3">
-        {resumeUrl && (
-          <a
-            href={resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5"
-            style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.borderColor = 'var(--accent)';
-              el.style.color = 'var(--accent)';
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.borderColor = 'var(--border)';
-              el.style.color = 'var(--text-secondary)';
-            }}
-          >
-            <FileDown size={12} className="shrink-0 transition-transform duration-200 group-hover:translate-y-0.5" />
-            <div className="text-left">
-              <div>Resume</div>
-              <div className="font-normal opacity-60 text-[10px] leading-tight">View / Download</div>
-            </div>
-            <ArrowUpRight size={11} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-        )}
         <div className="flex items-center gap-3">
           {github && (
             <a

@@ -17,11 +17,15 @@ const EMAILJS_KEY      = import.meta.env.VITE_EMAIL_JS_PUBLIC_KEY  as string;
 
 export function Contact({ contact }: ContactProps) {
   const email    = contact?.email    ?? '';
+  
+  const socialLinks = [
+    { icon: Mail, label: email, href: `mailto:${email}` },
+  ]
 
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>('idle');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formRef.current) return;
 
@@ -120,9 +124,7 @@ export function Contact({ contact }: ContactProps) {
               Prefer a direct line? Reach out via email or connect on LinkedIn. I'm always open to interesting conversations.
             </p>
 
-            {[
-              { icon: Mail,     label: email,      href: `mailto:${email}` },
-            ].filter(({ href }) => href && href !== 'mailto:').map(({ icon: Icon, label, href }) => (
+            {socialLinks.filter(({ href }) => href && href !== 'mailto:').map(({ icon: Icon, label, href }) => (
               <a
                 key={href}
                 href={href}

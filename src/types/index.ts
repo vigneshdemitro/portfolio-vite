@@ -43,6 +43,7 @@ export interface TimelineEntry {
   type: TimelineType;
   organization?: string;
   positions?: TimelinePosition[];
+  skills?: string[];
   title?: string;
   description?: string;
 }
@@ -86,6 +87,5 @@ export interface PortfolioData {
   profile: PortfolioProfile;
   about: { paragraphs: string[] };
   skills: Skill[];
-  experience: Experience[];
   meta: { lastUpdated: string; siteTitle: string; siteDescription: string };
 }
