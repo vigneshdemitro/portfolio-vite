@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Github,
   Linkedin,
-  FileDown,
   Milestone,
   ArrowUpRight,
 } from "lucide-react";
@@ -115,25 +114,17 @@ export function LeftPanel({
             href={resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 hover:-translate-y-0.5 mb-6"
-            style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.borderColor = 'var(--accent)';
-              el.style.color = 'var(--accent)';
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.borderColor = 'var(--border)';
-              el.style.color = 'var(--text-secondary)';
-            }}
+            className="group relative inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest mb-6 pb-0.5 transition-colors duration-200"
+            style={{ color: 'var(--text-muted)' }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'var(--text-primary)'}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'}
           >
-            <FileDown size={12} className="shrink-0 transition-transform duration-200 group-hover:translate-y-0.5" />
-            <div className="text-left">
-              <div>Resume</div>
-              <div className="font-normal opacity-60 text-[10px] leading-tight">View / Download</div>
-            </div>
-            <ArrowUpRight size={11} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            Resume
+            <ArrowUpRight size={11} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" style={{ color: 'var(--accent)' }} />
+            <span
+              className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full transition-all duration-300 ease-out"
+              style={{ background: 'var(--accent)' }}
+            />
           </a>
         )}
 
