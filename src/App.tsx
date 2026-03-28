@@ -10,6 +10,7 @@ import { BackToTop } from './components/ui/BackToTop';
 import { MobileNav } from './components/MobileNav';
 import { MobileSocials } from './components/MobileSocials';
 import { MobileHeader } from './components/MobileHeader';
+import { Footer } from './components/Footer';
 import { useTheme } from './hooks/useTheme';
 import { useActiveSection } from './hooks/useActiveSection';
 import { getTimelineData, getPortfolioData } from './lib/api';
@@ -75,7 +76,7 @@ export default function App() {
         </div>
 
         {/* ── RIGHT PANEL — scrollable content ──────── */}
-        <main className="lg:w-[58%] px-8 lg:px-14 py-16 lg:py-24 pb-24 lg:pb-24">
+        <main className="lg:w-[58%] px-8 lg:px-14 py-16 lg:py-24 pb-24 lg:pb-16">
           <About paragraphs={portfolioData?.about.paragraphs} />
           <Skills skills={portfolioData?.skills} />
           <Experience experiences={experiences} timelineUrl={portfolioData?.profile.contact.timeline} />
@@ -83,6 +84,9 @@ export default function App() {
 
         </main>
       </div>
+
+      {/* Footer */}
+      <Footer name={portfolioData?.profile.name} />
 
       {/* Mobile social strip — fixed right */}
       <MobileSocials contact={portfolioData?.profile.contact} theme={theme} onToggleTheme={toggle} />

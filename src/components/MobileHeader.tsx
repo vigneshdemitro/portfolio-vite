@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { useTypewriter } from '../hooks/useTypewriter';
 import { computeCareerYears } from '../lib/careerUtils';
 import { ExperienceStats } from './ui/ExperienceStats';
@@ -10,10 +11,11 @@ interface MobileHeaderProps {
 }
 
 export function MobileHeader({ portfolioProfile, meta }: MobileHeaderProps) {
-  const name     = portfolioProfile?.name     ?? 'Vigneshwar Pasupathi';
-  const initials = portfolioProfile?.initials ?? 'VP';
-  const photoUrl = portfolioProfile?.avatarUrl ?? '';
-  const roles    = portfolioProfile?.roles    ?? [];
+  const name      = portfolioProfile?.name              ?? 'Vigneshwar Pasupathi';
+  const initials  = portfolioProfile?.initials           ?? 'VP';
+  const photoUrl  = portfolioProfile?.avatarUrl          ?? '';
+  const roles     = portfolioProfile?.roles              ?? [];
+  const resumeUrl = portfolioProfile?.contact.resumeUrl  ?? '';
 
   const [imgSrc, setImgSrc] = useState('/Vignesh_sketch.png');
   const [imgError, setImgError] = useState(false);
@@ -71,13 +73,32 @@ export function MobileHeader({ portfolioProfile, meta }: MobileHeaderProps) {
         </div>
       </div>
 
-      {/* Stats row */}
+      {/* Stats + resume row */}
       {totalYears !== null && softwareYears !== null && (
         <div
-          className="flex justify-center px-5 py-4"
+          className="flex items-center justify-between px-5 py-4"
           style={{ borderBottom: '1px solid var(--border)' }}
         >
           <ExperienceStats totalYears={totalYears} softwareYears={softwareYears} compact />
+
+          {resumeUrl && (
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest pb-0.5 shrink-0 transition-colors duration-200"
+              style={{ color: 'var(--text-muted)' }}
+              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'var(--text-primary)'}
+              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'var(--text-muted)'}
+            >
+              Resume
+              <ArrowUpRight size={11} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" style={{ color: 'var(--accent)' }} />
+              <span
+                className="absolute bottom-0 left-0 h-px w-0 group-hover:w-full transition-all duration-300 ease-out"
+                style={{ background: 'var(--accent)' }}
+              />
+            </a>
+          )}
         </div>
       )}
     </div>

@@ -21,7 +21,7 @@ export function MobileSocials({ contact, theme, onToggleTheme }: MobileSocialPro
   const { github, linkedIn, timeline } = contact;
 
   return (
-    <div className="lg:hidden fixed right-3 top-1/4 -translate-y-1/4 z-40 flex flex-col gap-2">
+    <div className="lg:hidden fixed right-3 top-1/3 -translate-y-1/3 z-40 flex flex-col gap-2">
       <ThemeToggle theme={theme} onToggle={onToggleTheme} />
       {github && (
         <a href={github} target="_blank" rel="noopener noreferrer" aria-label="GitHub"

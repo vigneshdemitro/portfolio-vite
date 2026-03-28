@@ -196,12 +196,6 @@ export function LeftPanel({
           </a>
         </div>
 
-        {name && (
-          <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
-            Built by <span className="text-shimmer font-semibold">{name}</span>
-            {' '}· Vite + React + Tailwind
-          </p>
-        )}
       </div>
       </aside>
     </div>
