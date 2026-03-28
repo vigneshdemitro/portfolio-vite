@@ -77,7 +77,7 @@ export default function App() {
 
         {/* ── RIGHT PANEL — scrollable content ──────── */}
         <main className="lg:w-[58%] px-8 lg:px-14 py-16 lg:py-24 pb-24 lg:pb-16">
-          <About paragraphs={portfolioData?.about.paragraphs} />
+          <About paragraphs={portfolioData?.about.paragraphs} meta={timelineData?.meta} />
           <Skills skills={portfolioData?.skills} />
           <Experience experiences={experiences} timelineUrl={portfolioData?.profile.contact.timeline} />
           <Contact contact={portfolioData?.profile.contact} />
