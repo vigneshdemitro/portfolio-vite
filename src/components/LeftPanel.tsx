@@ -14,7 +14,6 @@ import type {
   SectionId,
   TimelineMeta,
   PortfolioProfile,
-  Theme,
 } from "../types";
 
 const navItems: NavItem[] = [
