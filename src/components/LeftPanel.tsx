@@ -6,8 +6,9 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import { NavLink } from "./NavLink";
-import { ThemeToggle } from "./ThemeToggle";
+import { ExperienceStats } from "./ui/ExperienceStats";
 import { useTypewriter } from "../hooks/useTypewriter";
+import { computeCareerYears } from "../lib/careerUtils";
 import type {
   NavItem,
   SectionId,
@@ -35,16 +36,12 @@ interface LeftPanelProps {
   activeSection: SectionId;
   meta?: TimelineMeta;
   portfolioProfile?: PortfolioProfile | null;
-  theme: Theme;
-  onToggleTheme: () => void;
 }
 
 export function LeftPanel({
   activeSection,
   meta,
   portfolioProfile,
-  theme,
-  onToggleTheme,
 }: LeftPanelProps) {
   const name     = portfolioProfile?.name     ?? "Vigneshwar Pasupathi";
   const initials = portfolioProfile?.initials ?? "VP";
@@ -68,54 +65,10 @@ export function LeftPanel({
   };
   const role = useTypewriter(roles);
 
-  const currentYear = new Date().getFullYear();
-  const totalYears = meta ? currentYear - meta.careerStartYear : null;
-  const softwareYears = meta
-    ? currentYear - meta.softwareCareerStartYear
-    : null;
+  const { totalYears, softwareYears } = computeCareerYears(meta);
 
   return (
     <div className="h-full">
-      {/* ── Mobile header (sticky top bar on small screens) ── */}
-      <div
-        className="lg:hidden sticky top-0 z-40 flex items-center justify-between px-3 py-3"
-        style={{ background: 'var(--bg)', borderBottom: '1px solid var(--border)' }}
-      >
-        <div className="flex items-center gap-3 min-w-0">
-          {!imgError ? (
-            <img
-              src={imgSrc}
-              alt={name}
-              onError={handleImgError}
-              className="w-9 h-9 rounded-lg object-cover object-top shrink-0"
-              style={{ border: '1px solid var(--border)' }}
-            />
-          ) : (
-            <div
-              className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-bold shrink-0"
-              style={{ background: 'var(--accent-glow)', color: 'var(--accent)', border: '1px solid var(--border)' }}
-            >
-              {initials}
-            </div>
-          )}
-          <div className="min-w-0">
-            <div
-              className="text-sm font-bold leading-tight truncate"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {name}
-            </div>
-            <div
-              className="text-xs font-medium h-4 flex items-center"
-              style={{ color: 'var(--accent)' }}
-            >
-              {role}<span className="cursor" />
-            </div>
-          </div>
-        </div>
-
-        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-      </div>
 
       {/* ── Desktop sidebar (lg+) ── */}
       <aside className="hidden lg:flex flex-col justify-between h-full py-16 px-14">
@@ -195,55 +148,10 @@ export function LeftPanel({
           </ul>
         </nav>
 
-        {/* Experience stats — like timeline, no borders */}
+        {/* Experience stats */}
         {totalYears !== null && softwareYears !== null && (
-          <div className="flex items-center gap-8 mt-10">
-            <div>
-              <div
-                className="text-4xl font-bold leading-none mb-1"
-                style={{
-                  background: "linear-gradient(135deg, var(--accent), #38bdf8)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                {totalYears}+
-              </div>
-              <div
-                className="text-xs uppercase tracking-widest"
-                style={{ color: "var(--text-muted)" }}
-              >
-                Years
-                <br />
-                Experience
-              </div>
-            </div>
-
-            <div
-              className="w-px h-10 self-center"
-              style={{ background: "var(--border)" }}
-            />
-
-            <div>
-              <div
-                className="text-4xl font-bold leading-none mb-1"
-                style={{
-                  background: "linear-gradient(135deg, #38bdf8, #c084fc)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                {softwareYears}+
-              </div>
-              <div
-                className="text-xs uppercase tracking-widest"
-                style={{ color: "var(--text-muted)" }}
-              >
-                Years in
-                <br />
-                Software
-              </div>
-            </div>
+          <div className="mt-10">
+            <ExperienceStats totalYears={totalYears} softwareYears={softwareYears} />
           </div>
         )}
       </div>

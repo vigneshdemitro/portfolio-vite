@@ -9,6 +9,7 @@ import { Contact } from './components/sections/Contact';
 import { BackToTop } from './components/ui/BackToTop';
 import { MobileNav } from './components/MobileNav';
 import { MobileSocials } from './components/MobileSocials';
+import { MobileHeader } from './components/MobileHeader';
 import { useTheme } from './hooks/useTheme';
 import { useActiveSection } from './hooks/useActiveSection';
 import { getTimelineData, getPortfolioData } from './lib/api';
@@ -58,6 +59,9 @@ export default function App() {
         <ThemeToggle theme={theme} onToggle={toggle} />
       </div>
 
+      {/* Mobile sticky header */}
+      <MobileHeader portfolioProfile={portfolioData?.profile ?? null} meta={timelineData?.meta} />
+
       {/* ── Two-column layout ─────────────────────────── */}
       <div className="relative z-10 lg:flex lg:min-h-screen lg:max-w-6xl lg:mx-auto">
 
@@ -67,8 +71,6 @@ export default function App() {
             activeSection={activeSection}
             meta={timelineData?.meta}
             portfolioProfile={portfolioData?.profile ?? null}
-            theme={theme}
-            onToggleTheme={toggle}
           />
         </div>
 
@@ -83,7 +85,7 @@ export default function App() {
       </div>
 
       {/* Mobile social strip — fixed right */}
-      <MobileSocials contact={portfolioData?.profile.contact} />
+      <MobileSocials contact={portfolioData?.profile.contact} theme={theme} onToggleTheme={toggle} />
 
       {/* Mobile bottom nav */}
       <MobileNav activeSection={activeSection} />
