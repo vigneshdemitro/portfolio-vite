@@ -12,7 +12,6 @@ function formatDate(dateStr: string | null): string {
 
 interface TimelineEntryProps {
   experience: Experience;
-  delay?: number;
 }
 
 export function TimelineEntry({ experience }: TimelineEntryProps) {

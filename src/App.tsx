@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { LeftPanel } from './components/LeftPanel';
-import { ThemeToggle } from './components/ThemeToggle';
 import { About } from './components/sections/About';
 import { Skills } from './components/sections/Skills';
 import { Experience } from './components/sections/Experience';
 import { Contact } from './components/sections/Contact';
 import { BackToTop } from './components/ui/BackToTop';
 import { MobileNav } from './components/MobileNav';
-import { MobileSocials } from './components/MobileSocials';
+import { SocialBar } from './components/SocialBar';
 import { MobileHeader } from './components/MobileHeader';
 import { Footer } from './components/Footer';
 import { useTheme } from './hooks/useTheme';
@@ -55,24 +54,15 @@ export default function App() {
       {/* Aurora blobs (dark only) */}
       <div className="aurora" />
 
-      {/* Theme toggle — fixed top right (desktop only) */}
-      <div className="hidden lg:block fixed top-4 right-5 z-50">
-        <ThemeToggle theme={theme} onToggle={toggle} />
-      </div>
-
       {/* Mobile sticky header */}
-      <MobileHeader portfolioProfile={portfolioData?.profile ?? null} meta={timelineData?.meta} />
+      <MobileHeader meta={timelineData?.meta} />
 
       {/* ── Two-column layout ─────────────────────────── */}
       <div className="relative z-10 lg:flex lg:min-h-screen lg:max-w-6xl lg:mx-auto">
 
         {/* ── LEFT PANEL — fixed on desktop ─────────── */}
         <div className="lg:sticky lg:top-0 lg:h-screen lg:w-[42%] lg:shrink-0">
-          <LeftPanel
-            activeSection={activeSection}
-            meta={timelineData?.meta}
-            portfolioProfile={portfolioData?.profile ?? null}
-          />
+          <LeftPanel activeSection={activeSection} meta={timelineData?.meta} />
         </div>
 
         {/* ── RIGHT PANEL — scrollable content ──────── */}
@@ -88,8 +78,8 @@ export default function App() {
       {/* Footer */}
       <Footer name={portfolioData?.profile.name} />
 
-      {/* Mobile social strip — fixed right */}
-      <MobileSocials contact={portfolioData?.profile.contact} theme={theme} onToggleTheme={toggle} />
+      {/* Social bar — fixed right (desktop & mobile) */}
+      <SocialBar contact={portfolioData?.profile.contact} theme={theme} onToggleTheme={toggle} />
 
       {/* Mobile bottom nav */}
       <MobileNav activeSection={activeSection} />

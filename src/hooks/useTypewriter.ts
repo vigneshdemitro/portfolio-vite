@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function useTypewriter(words: string[], speed = 80, pause = 1800) {
   const [displayed, setDisplayed] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
+  const pauseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!words.length) return;
@@ -14,7 +15,7 @@ export function useTypewriter(words: string[], speed = 80, pause = 1800) {
       if (!deleting) {
         setDisplayed(current.slice(0, charIndex + 1));
         if (charIndex + 1 === current.length) {
-          setTimeout(() => setDeleting(true), pause);
+          pauseTimer.current = setTimeout(() => setDeleting(true), pause);
         } else {
           setCharIndex(i => i + 1);
         }
@@ -30,7 +31,10 @@ export function useTypewriter(words: string[], speed = 80, pause = 1800) {
       }
     }, deleting ? speed / 2 : speed);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      if (pauseTimer.current) clearTimeout(pauseTimer.current);
+    };
   }, [charIndex, deleting, wordIndex, words, speed, pause]);
 
   return displayed;
